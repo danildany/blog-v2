@@ -49,9 +49,27 @@ app.post("/compose", function(req, res){
   res.redirect("/");
 
 });
+const postSchema = {
+
+  title: String,
+ 
+  content: String
+ 
+};
+const Post = mongoose.model("Post", postSchema);
+
 
 app.get("/posts/:postName", function(req, res){
   const requestedTitle = _.lowerCase(req.params.postName);
+  const post = new Post ({
+
+    title: req.body.postTitle,
+ 
+    content: req.body.postBody
+ 
+  });
+  post.save()
+
 
   posts.forEach(function(post){
     const storedTitle = _.lowerCase(post.title);
@@ -66,13 +84,6 @@ app.get("/posts/:postName", function(req, res){
 
 });
 
-const postSchema = {
-
-  title: String,
- 
-  content: String
- 
- };
 
 
 
